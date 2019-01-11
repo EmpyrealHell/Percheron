@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="Percheron" Height="900" Width="1600" Loaded="Window_Loaded">
     <Grid>
-        
+        <RichTextBox x:Name="Messages" Margin="0,0,0,23" VerticalContentAlignment="Bottom" Background="Black" BorderBrush="#FF54524A" Foreground="White" FontFamily="Calibri" FontSize="14"/>
+        <TextBox x:Name="Input" TextWrapping="Wrap" Text="Input" Height="23" VerticalAlignment="Bottom" PreviewKeyDown="Input_PreviewKeyDown" Background="Black" BorderBrush="#FF54524A" Foreground="White"/>
+
     </Grid>
 </Window>

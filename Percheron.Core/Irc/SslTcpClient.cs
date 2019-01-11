@@ -11,7 +11,7 @@ using System.Text;
 
 namespace Percheron.Core.Irc
 {
-    public class SslTcpClient : TcpClient
+    public class SslNetworkClient : TcpClient, INetworkClient
     {
         public static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
@@ -25,24 +25,29 @@ namespace Percheron.Core.Irc
 
         public SslStream SslStream { get; private set; }
 
-        public SslTcpClient() : base()
+        public SslNetworkClient() : base()
         {
             throw new NotImplementedException("This constructor is not implemented, use the SslTcpClient(string hostname, int port) constructor instead.");
         }
 
-        public SslTcpClient(AddressFamily family) : base(family)
+        public SslNetworkClient(AddressFamily family) : base(family)
         {
             throw new NotImplementedException("This constructor is not implemented, use the SslTcpClient(string hostname, int port) constructor instead.");
         }
 
-        public SslTcpClient(IPEndPoint localEP) : base(localEP)
+        public SslNetworkClient(IPEndPoint localEP) : base(localEP)
         {
             throw new NotImplementedException("This constructor is not implemented, use the SslTcpClient(string hostname, int port) constructor instead.");
         }
 
-        public SslTcpClient(string hostname, int port) : base(hostname, port)
+        public SslNetworkClient(string hostname, int port) : base(hostname, port)
         {
             this.AuthenticateSSL(hostname);
+        }
+
+        public Stream GetNetworkStream()
+        {
+            return this.SslStream;
         }
 
         public void AuthenticateSSL(string hostname)

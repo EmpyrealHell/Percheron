@@ -22,7 +22,8 @@ namespace Percheron.Client
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ChatClient chat;
+        private TwitchChatClient chat;
+        private string channel;
 
         public MainWindow()
         {
@@ -38,8 +39,64 @@ namespace Percheron.Client
                 var token = auth.Token;
                 var username = Users.Get(token);
                 Console.WriteLine("sucessfully got login info for " + username);
-                this.chat = new ChatClient();
+                this.chat = new TwitchChatClient();
+                this.chat.OnConnect += Chat_OnConnect;
+                this.chat.OnPrivMsg += Chat_OnMessageReceived;
                 this.chat.Connect(username, token, true);
+            }
+        }
+
+        private void Chat_OnMessageReceived(ChatMessage message)
+        {
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                var paragraph = new Paragraph();
+                var color = this.Messages.Foreground;
+                if (message.Tags.ContainsKey("color"))
+                {
+                    var colorTag = message.Tags["color"];
+                    if (!string.IsNullOrEmpty(colorTag))
+                    {
+                        color = (SolidColorBrush)new BrushConverter().ConvertFrom(colorTag);
+                    }
+                }
+                paragraph.Inlines.Add(new Bold(new Run(DateTime.Now.ToString("HH:mm:ss") + " " + message.Sender + ": ") { Foreground = color }));
+                paragraph.Inlines.Add(new Run(message.Message));
+                this.Messages.Document.Blocks.Add(paragraph);
+                if (this.Messages.Document.Blocks.Count > 4096)
+                {
+                    this.Messages.Document.Blocks.Remove(this.Messages.Document.Blocks.FirstBlock);
+                }
+                this.Messages.ScrollToEnd();
+            }));
+        }
+
+        private void Chat_OnConnect()
+        {
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                var joinChannel = new GetChannelName("Channel", "Enter the name of a channel to join", "");
+                var success = joinChannel.ShowDialog();
+                if (success.HasValue && success.Value)
+                {
+                    this.Input.Text = "";
+                    this.Messages.Document.Blocks.Clear();
+                    this.channel = joinChannel.Value;
+                    this.chat.JoinChannel(this.channel);
+                }
+            }));
+        }
+
+        private void Input_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (!string.IsNullOrWhiteSpace(this.channel))
+                {
+                    this.chat.SendMessage(this.channel, this.Input.Text);
+                }
+                this.Input.Text = "";
+                e.Handled = true;
             }
         }
     }
