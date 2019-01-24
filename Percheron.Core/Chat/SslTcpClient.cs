@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Percheron.Interfaces.Chat;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +10,7 @@ using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
-namespace Percheron.Core.Irc
+namespace Percheron.Core.Chat
 {
     public class SslNetworkClient : TcpClient, INetworkClient
     {

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Percheron.Interfaces.Chat;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-namespace Percheron.Core.Irc
+namespace Percheron.Core.Chat
 {
     public class TcpNetworkClient : TcpClient, INetworkClient
     {

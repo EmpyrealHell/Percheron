@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Percheron.Core.Irc
+namespace Percheron.Interfaces.Chat
 {
-    public class IrcMessage
+    public struct IrcMessage
     {
         private static readonly Regex messageParser = new Regex(@"^(?:(?<Tags>@(?:(?:[^ ]+\/)?[a-zA-Z0-9\-]+=[^\0; \r\n]*)(?:;(?:[^ ]+\/)?[a-zA-Z0-9\-]+=[^\0; \r\n]*)*) +)?(?:(?:\:(?<ServerNick>[^ !@]+))(?:\!(?<User>[^ @]+))?(?:@(?<Host>[^ ]+))? +)?(?<Command>(?:[a-zA-Z]+)|(?:[0-9]{3}))(?<Params>(?: +[^ \0\r\n\:][^ \0\r\n]*)*(?: +\:[^\0\r\n]*)?)$");
         private static readonly Regex firstParamParser = new Regex(@"");
@@ -70,13 +70,23 @@ namespace Percheron.Core.Irc
                 else
                 {
                     this.Middles = messageParams.Trim().Split(' ');
+                    this.Trailing = null;
                 }
+            }
+            else
+            {
+                this.Middles = null;
+                this.Trailing = null;
             }
             var tagList = match.Groups["Tags"]?.Value;
             if (!string.IsNullOrWhiteSpace(tagList))
             {
                 tagList = tagList.Trim().Substring(1);
                 this.Tags = tagList.Split(';').Select(x => x.Split('=')).ToDictionary(key => key[0], value => value[1]);
+            }
+            else
+            {
+                this.Tags = null;
             }
         }
 

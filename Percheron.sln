@@ -11,7 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Percheron.Client", "Percher
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Percheron.API", "Percheron.API\Percheron.API.csproj", "{C3D551EA-5CA0-4A0F-8425-66D52CD5CD34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Percheron.Test", "Percheron.Test\Percheron.Test.csproj", "{C68C53AD-CE46-4F6D-A7F6-A373B74BB422}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Percheron.Test", "Percheron.Test\Percheron.Test.csproj", "{C68C53AD-CE46-4F6D-A7F6-A373B74BB422}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Percheron.Plugin.Test", "Percheron.Plugin.Test\Percheron.Plugin.Test.csproj", "{3A1EACC3-D34B-452C-8D3C-36CD25FAF6CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{C68C53AD-CE46-4F6D-A7F6-A373B74BB422}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C68C53AD-CE46-4F6D-A7F6-A373B74BB422}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C68C53AD-CE46-4F6D-A7F6-A373B74BB422}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A1EACC3-D34B-452C-8D3C-36CD25FAF6CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A1EACC3-D34B-452C-8D3C-36CD25FAF6CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A1EACC3-D34B-452C-8D3C-36CD25FAF6CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A1EACC3-D34B-452C-8D3C-36CD25FAF6CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

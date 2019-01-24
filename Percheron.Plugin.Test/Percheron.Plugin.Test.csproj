@@ -2,15 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Composition" Version="1.2.0" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.109.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Percheron.Interfaces\Percheron.Interfaces.csproj" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir $(SolutionDir)Percheron.Client\bin\$(ConfigurationName)\Plugins\&#xD;&#xA;copy /Y $(TargetPath) $(SolutionDir)Percheron.Client\bin\$(ConfigurationName)\Plugins\" />
+  </Target>
 
 </Project>

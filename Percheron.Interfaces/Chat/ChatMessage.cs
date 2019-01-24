@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Percheron.Core.Chat
+namespace Percheron.Interfaces.Chat
 {
-    public class ChatMessage
+    public struct ChatMessage
     {
         public string Sender { get; set; }
         public string Channel { get; set; }

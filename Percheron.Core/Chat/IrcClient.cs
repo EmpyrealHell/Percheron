@@ -1,4 +1,5 @@
 ﻿using Percheron.Core.Chat;
+using Percheron.Interfaces.Chat;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Percheron.Core.Irc
+namespace Percheron.Core.Chat
 {
     /// <summary>
     /// A low-level IRC client. Allow you to send raw messages, and receive messages from the server broken up according to RFC1459. Also has limited processing of numeric commands, and automatically responds to ping messages.

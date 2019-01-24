@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Percheron.Core.Irc;
+using Percheron.Interfaces.Chat;
 using System;
 using System.Collections.Generic;
 using System.Linq;

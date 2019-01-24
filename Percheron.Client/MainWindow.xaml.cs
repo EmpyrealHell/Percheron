@@ -1,5 +1,7 @@
 ﻿using Percheron.API.Resource;
 using Percheron.Core.Chat;
+using Percheron.Core.Plugin;
+using Percheron.Interfaces.Chat;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +34,8 @@ namespace Percheron.Client
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            var pm = new PluginManager();
+            pm.Load();
             var auth = new AuthenticationModal();
             var success = auth.ShowDialog();
             if (success.HasValue && success.Value)
@@ -46,7 +50,7 @@ namespace Percheron.Client
             }
         }
 
-        private void Chat_OnMessageReceived(ChatMessage message)
+        private void Chat_OnMessageReceived(ITwitchClient sender, ChatMessage message)
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
             {

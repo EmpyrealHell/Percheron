@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Percheron.Core.Irc
+namespace Percheron.Interfaces.Chat
 {
     public interface INetworkClient : IDisposable
     {

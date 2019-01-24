@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Percheron.Interfaces.Chat;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Percheron.Core.Irc
+namespace Percheron.Interfaces.Chat
 {
     public delegate void IrcMessageEvent(IrcMessage message);
 
