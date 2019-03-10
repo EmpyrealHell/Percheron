@@ -1,5 +1,6 @@
 ﻿using Percheron.Interfaces.Chat;
 using Percheron.Interfaces.Plugin;
+using Percheron.Interfaces.Plugin.Option;
 using System;
 using System.Collections.Generic;
 using System.Composition;
@@ -14,7 +15,7 @@ namespace Percheron.Plugin.Test
         public TestPlugin()
         {
             var options = new List<PluginOption>();
-            options.Add(new BooleanOption("DoThing", "Do the thing?", true));
+            options.Add(new BooleanOption("DoThing", "Do the thing?", "This option will allow you to do the thing if enabled", true));
             this.Options = options;
         }
 

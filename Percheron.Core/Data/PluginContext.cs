@@ -10,7 +10,8 @@ namespace Percheron.Core.Data
         // public DbSet<>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=data.db");
+            // This is basically how I did it before, need to figure out how to use sqlite in this context
+            // optionsBuilder.UseSqlite("Data Source=data.db");
         }
     }
 }

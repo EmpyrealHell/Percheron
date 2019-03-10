@@ -1,5 +1,6 @@
 ﻿using Percheron.Interfaces.Chat;
 using Percheron.Interfaces.Plugin;
+using Percheron.Interfaces.Plugin.Option;
 using System;
 using System.Collections.Generic;
 using System.Text;
