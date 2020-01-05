@@ -22,8 +22,11 @@ namespace Percheron.Client
     /// </summary>
     public partial class AuthenticationModal : Window
     {
+        private static string client_secret = Properties.Resources.ClientSecret;
+
         private const string client_id = "9rpwecj5h5juxzc7ln7w6iqcoiumgo";
         private const string redirect_uri = "http://localhost";
+        private const bool useAuthFlow = true;
 
         private string state;
 
@@ -41,7 +44,7 @@ namespace Percheron.Client
             builder.Path = "oauth2/authorize";
             builder.AddQuery("client_id", client_id);
             builder.AddQuery("redirect_uri", redirect_uri);
-            builder.AddQuery("response_type", "token");
+            builder.AddQuery("response_type", useAuthFlow ? "code" : "token");
             builder.AddQuery("scope", "chat:read chat:edit whispers:read whispers:edit");
             builder.AddQuery("force_verify", "true");
             builder.AddQuery("state", this.state);
@@ -49,20 +52,43 @@ namespace Percheron.Client
             this.Browser.Navigate(builder.Uri);
         }
 
+        private IDictionary<string, string> createDictFromUrl(string url)
+        {
+            return url.Substring(1).Split('&').Select(x => x.Split('=')).ToDictionary(key => key[0], value => value[1]);
+        }
+
         private void Browser_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
             if (e.Uri.ToString().StartsWith(redirect_uri))
             {
-                var returnValues = e.Uri.Fragment.Substring(1).Split('&').Select(x => x.Split('=')).ToDictionary(key => key[0], value => value[1]);
-                if (returnValues["state"] == this.state)
+                if (useAuthFlow)
                 {
-                    this.Token = returnValues["access_token"];
-                    this.DialogResult = true;
-                    this.Close();
+                    var returnValues = createDictFromUrl(e.Uri.Query);
+                    if (returnValues["state"] == this.state)
+                    {
+                        var tokenData = API.Resource.Token.Get(client_id, client_secret, returnValues["code"], redirect_uri);
+                        this.Token = tokenData.AccessToken;
+                        this.DialogResult = true;
+                        this.Close();
+                    }
+                    else
+                    {
+                        throw new SecurityException("CSRF attack detected, exiting application");
+                    }
                 }
                 else
                 {
-                    throw new SecurityException("CSRF attack detecting, exiting application");
+                    var returnValues = createDictFromUrl(e.Uri.Fragment);
+                    if (returnValues["state"] == this.state)
+                    {
+                        this.Token = returnValues["access_token"];
+                        this.DialogResult = true;
+                        this.Close();
+                    }
+                    else
+                    {
+                        throw new SecurityException("CSRF attack detected, exiting application");
+                    }
                 }
             }
         }

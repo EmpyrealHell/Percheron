@@ -59,5 +59,14 @@ namespace Percheron.Client.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string ClientSecret {
+            get {
+                return ResourceManager.GetString("ClientSecret", resourceCulture);
+            }
+        }
     }
 }
